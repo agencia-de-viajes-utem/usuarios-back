@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: golang-service
+  name: usuarios-back
 spec:
   selector:
-    app: golang-service
+    app: usuarios-back
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8888
+      targetPort: 8989
   type: ClusterIP
