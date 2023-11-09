@@ -1,0 +1,20 @@
+# golang-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usuarios-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usuarios-back
+  template:
+    metadata:
+      labels:
+        app: usuarios-back
+    spec:
+      containers:
+      - name: usuarios-back
+        image: gcr.io/annular-form-401215/gcr-alpine:{GITHUB_SHA}
+        ports:
+        - containerPort: 8989

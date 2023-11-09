@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: usuarios-back
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    acme.cert-manager.io/http01-edit-in-place: "true"
+spec: 
+  rules:
+  - host: api.usuario.lumonidy.studio
+    http:
+      paths:
+      - backend:
+          service:
+            name: usuarios-back
+            port:
+              number: 80
+        pathType: Prefix
+        path: /
+  tls:
+  - hosts:
+    - api.usuario.lumonidy.studio
+    secretName: usuarios-back-secret

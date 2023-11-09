@@ -1,0 +1,13 @@
+#golang-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: usuarios-back
+spec:
+  selector:
+    app: usuarios-back
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8989
+  type: ClusterIP
