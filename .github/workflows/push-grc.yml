@@ -29,12 +29,12 @@ jobs:
         echo "${{ secrets.ENV_FILE }}" > .env
       working-directory: ${{ github.workspace }}
 
-      - name: Create .env.credentials file
+    - name: Create .env.credentials file
       run: |
         echo "${{ secrets.ENV_CREDENTIALS }}" > .env.credentials
       working-directory: ${{ github.workspace }}
 
-      - name: Create .env.db file
+    - name: Create .env.db file
       run: |
         echo "${{ secrets.ENV_DB }}" > .env.db
       working-directory: ${{ github.workspace }}
