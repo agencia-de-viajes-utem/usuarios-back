@@ -2,19 +2,12 @@ package handlers
 
 import (
 	"context"
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/rand"
-	"encoding/base64"
 	"errors"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
-
-var encryptionKey []byte
 
 func CallbackGoogle(w http.ResponseWriter, r *http.Request) {
 	state := r.FormValue("state")
@@ -23,18 +16,7 @@ func CallbackGoogle(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal("error getting user data")
 	}
-	userDataString := string(data) // Convertir los datos a un formato adecuado
-
-	cookie := http.Cookie{
-		Name:     "user_data",
-		Value:    userDataString,
-		Path:     "/",
-		Secure:   true,
-		HttpOnly: true,
-	}
-	fmt.Println(data)
-	http.SetCookie(w, &cookie)
-	http.Redirect(w, r, "http://localhost:5173/", http.StatusTemporaryRedirect)
+	fmt.Fprintf(w, "Data : %s", data)
 }
 func getUserData(state, code string) ([]byte, error) {
 	if state != RandomString {
@@ -54,21 +36,4 @@ func getUserData(state, code string) ([]byte, error) {
 		return nil, err
 	}
 	return data, nil
-}
-func encrypt(plaintext string) (string, error) {
-	block, err := aes.NewCipher(encryptionKey)
-	if err != nil {
-		return "", err
-	}
-
-	ciphertext := make([]byte, aes.BlockSize+len(plaintext))
-	iv := ciphertext[:aes.BlockSize]
-	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
-		return "", err
-	}
-
-	stream := cipher.NewCFBEncrypter(block, iv)
-	stream.XORKeyStream(ciphertext[aes.BlockSize:], []byte(plaintext))
-
-	return base64.URLEncoding.EncodeToString(ciphertext), nil
 }

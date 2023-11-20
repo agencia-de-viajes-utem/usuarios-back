@@ -15,7 +15,7 @@ var ssgolangf *oauth2.Config
 func init() {
 	err := godotenv.Load(".env.credentials")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error loading env.credentials file")
 	}
 
 	ssgolangf = &oauth2.Config{
