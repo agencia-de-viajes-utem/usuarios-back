@@ -1,26 +1,26 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-back-agendamiento
+  name: usuarios-back
   namespace: default
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: letsencrypt-prod
     acme.cert-manager.io/http01-edit-in-place: "true"
-spec:
+spec: 
   rules:
-  - host: api.agendamiento.lumonidy.studio
+  - host: api.usuario.lumonidy.studio
     http:
       paths:
       - backend:
           service:
-            name: back-agendamiento
+            name: usuarios-back
             port:
               number: 80
         pathType: Prefix
         path: /
   tls:
   - hosts:
-    - api.agendamiento.lumonidy.studio
-    secretName: agendamiento-tls
+    - api.usuario.lumonidy.studio
+    secretName: usuarios-back-secret
 
