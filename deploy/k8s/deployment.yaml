@@ -30,4 +30,4 @@ spec:
       volumes:
       - name: .env
         secret:
-          secretName: GOOGLE_APPLICATION_CREDENTIALS
+          secretName: google-application-credentials
