@@ -24,10 +24,10 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY_STG }}
     
-    - name: Decode and create .env file
-      run: |
-        echo -n "${{ secrets.ENV_FILE }}" | base64 -d > .env 
-      working-directory: ${{ github.workspace }}
+    # - name: Create .env file
+    #   run: |
+    #     echo "${{ secrets.ENV_FILE }}" > .env 
+    #   working-directory: ${{ github.workspace }}
 
     - name: Create .env.credentials file
       run: |
@@ -81,6 +81,15 @@ jobs:
 
     - name: Debug kubectl configurations
       run: kubectl config view
+
+
+    # ejecuto el secret.yaml
+
+    - name: Start secret
+      run: |
+        sed -i "s~{KEY_JSON}~${{ secrets.ENV_FILE }}~" deploy/k8s/secret.yaml
+        cd deploy/k8s/
+        kubectl apply -f secret.yaml
 
     - name: Deploy
       run: |

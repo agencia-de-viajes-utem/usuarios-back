@@ -27,3 +27,7 @@ spec:
           requests:
             cpu: 50m
             memory: 128Mi
+      volumes:
+      - name: .env
+        secret:
+          secretName: GOOGLE_APPLICATION_CREDENTIALS
