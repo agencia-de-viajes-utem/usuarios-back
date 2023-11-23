@@ -51,7 +51,7 @@ jobs:
 
     - name: Start secret
       run: |
-        echo "${{ secrets.ENV_FILE }}" | jq -c > temp_env.json
+        echo "${{ secrets.ENV_FILE }}" | jq -c '.private_key |= sub("\\n"; "\n")' > temp_env.json
         sed -i "s~{KEY_JSON}~$(cat temp_env.json)~" deploy/k8s/secret.yaml
         cd deploy/k8s/
         kubectl apply -f secret.yaml
