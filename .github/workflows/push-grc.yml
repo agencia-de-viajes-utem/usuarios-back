@@ -24,9 +24,9 @@ jobs:
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY_STG }}
     
-    - name: Create .env file
+    - name: Decode and create .env file
       run: |
-        echo "${{ secrets.ENV_FILE }}" > .env
+        echo "${{ secrets.ENV_FILE }}" | base64 --decode > .env
       working-directory: ${{ github.workspace }}
 
     - name: Create .env.credentials file
