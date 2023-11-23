@@ -51,11 +51,10 @@ jobs:
 
     - name: Start secret
       run: |
-        echo "${{ secrets.ENV_FILE }}" | jq -c '.private_key |= sub("\\n"; "\n")' > temp_env.json
-        sed -i "s~{KEY_JSON}~$(cat temp_env.json)~" deploy/k8s/secret.yaml
+        echo -n "${{ secrets.ENV_FILE }}" | base64 -w 0 > temp_env_base64.txt
+        sed -i "s~{KEY_JSON}~$(cat temp_env_base64.txt)~" deploy/k8s/secret.yaml
         cd deploy/k8s/
         kubectl apply -f secret.yaml
-        rm temp_env.json
 
     - name: Get gcloud version & info
       run: |-
