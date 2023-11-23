@@ -47,14 +47,6 @@ jobs:
         install_components: 'gke-gcloud-auth-plugin'
         export_default_credentials: true 
 
-    # ejecuto el secret.yaml
-
-    - name: Start secret
-      run: |
-        echo -n "${{ secrets.ENV_FILE }}" | base64 -w 0 > temp_env_base64.txt
-        sed -i "s~{KEY_JSON}~$(cat temp_env_base64.txt)~" deploy/k8s/secret.yaml
-        cd deploy/k8s/
-        kubectl apply -f secret.yaml
 
     - name: Get gcloud version & info
       run: |-
@@ -91,7 +83,14 @@ jobs:
     - name: Debug kubectl configurations
       run: kubectl config view
 
+    # ejecuto el secret.yaml
 
+    - name: Start secret
+      run: |
+        echo -n "${{ secrets.ENV_FILE }}" | base64 -w 0 > temp_env_base64.txt
+        sed -i "s~{KEY_JSON}~$(cat temp_env_base64.txt)~" deploy/k8s/secret.yaml
+        cd deploy/k8s/
+        kubectl apply -f secret.yaml
 
 
     - name: Deploy
