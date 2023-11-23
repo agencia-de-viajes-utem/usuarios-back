@@ -28,6 +28,6 @@ spec:
             cpu: 50m
             memory: 128Mi
       volumes:
-      - name: .env
+      - name: env-volume
         secret:
           secretName: google-application-credentials
