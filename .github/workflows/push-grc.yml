@@ -26,7 +26,7 @@ jobs:
     
     - name: Decode and create .env file
       run: |
-        echo "${{ secrets.ENV_FILE }}" | base64 -D > .env
+        echo "${{ secrets.ENV_FILE }}" | base64 -di > .env
       working-directory: ${{ github.workspace }}
 
     - name: Create .env.credentials file
