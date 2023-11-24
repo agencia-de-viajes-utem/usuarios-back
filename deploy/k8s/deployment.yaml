@@ -17,7 +17,7 @@ spec:
       - name: usuarios-back
         image: gcr.io/annular-form-401215/gcr-alpine:{GITHUB_SHA}
         ports:
-        - containerPort: 1212
+        - containerPort: 3000
         resources:
           # You must specify requests for CPU to autoscale
           # based on CPU utilization
